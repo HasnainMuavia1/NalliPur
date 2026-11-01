@@ -55,8 +55,11 @@ export default function ServeFilm() {
   const [flavorsOn, setFlavorsOn] = useState(false);
   const activeRef = useRef(0);
   const onRef = useRef(false);
+  const sinkRef = useRef<HTMLDivElement>(null);
 
   const onProgress = useCallback((p: number, pinned: boolean) => {
+    // the dish stills sit above the film's own blackout, so sink them here
+    if (sinkRef.current) sinkRef.current.style.opacity = String(seg(p, P.flavorsEnd, 1));
     const on = p >= P.orbitEnd - 0.002;
     if (on !== onRef.current) {
       onRef.current = on;
@@ -261,6 +264,8 @@ export default function ServeFilm() {
           </div>
         </div>
       </div>
+
+      <div ref={sinkRef} aria-hidden="true" className="pointer-events-none absolute inset-0 bg-coal" style={{ opacity: 0 }} />
 
       {/* ember glow rising as the stage sinks to black — the hand-off to the fire */}
       <div
