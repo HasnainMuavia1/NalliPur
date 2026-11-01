@@ -1,26 +1,269 @@
 @import "tailwindcss";
 
+/* Nalli Pur — desi pop. Charcoal film, poster-yellow type, truck-art & ajrak. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --coal: #0b0807;
+  --soot: #151010;
+  --ivory: #fbf3e4;
+  --ivory-dim: #c9bba6;
+  --yellow: #ffc20e;
+  --brand-orange: #f86c00;
+  --brand-red: #c8000a;
+  --green: #0b6b3a;
+  --purple: #4b0f50;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-coal: var(--coal);
+  --color-soot: var(--soot);
+  --color-ivory: var(--ivory);
+  --color-ivory-dim: var(--ivory-dim);
+  --color-yellow: var(--yellow);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-red: var(--brand-red);
+  --color-green: var(--green);
+  --color-purple: var(--purple);
+  --font-display: var(--font-display);
+  --font-urdu: var(--font-urdu);
+  --font-sans: var(--font-body);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--coal);
+  color-scheme: dark;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--coal);
+  color: var(--ivory);
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--yellow);
+  color: var(--coal);
+}
+:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+@layer components {
+  /* poster display: chunky, rounded, hard drop shadow */
+  .display {
+    font-family: var(--font-display), "Arial Black", sans-serif;
+    font-weight: 400;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+  }
+  .pop {
+    color: var(--yellow);
+    text-shadow: 0.06em 0.06em 0 #000;
+  }
+  .pop-white {
+    color: var(--ivory);
+    text-shadow: 0.06em 0.06em 0 #000;
+  }
+  .urdu {
+    font-family: var(--font-urdu), serif;
+    direction: rtl;
+    line-height: 1.1;
+  }
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ivory-dim);
+  }
+
+  /* sticker buttons: flat colour, black outline, hard shadow that presses in */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.35rem;
+    font-family: var(--font-display), sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 2.5px solid #000;
+    border-radius: 999px;
+    box-shadow: 4px 4px 0 #000;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, background-color 0.2s;
+  }
+  .btn:hover {
+    transform: translate(-2px, -2px) rotate(-1.5deg);
+    box-shadow: 6px 6px 0 #000;
+  }
+  .btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 #000;
+  }
+  .btn-yellow {
+    background: var(--yellow);
+    color: #000;
+  }
+  .btn-white {
+    background: var(--ivory);
+    color: #000;
+  }
+  .btn-red {
+    background: var(--brand-red);
+    color: var(--ivory);
+  }
+  .btn .arrow {
+    transition: transform 0.25s ease;
+  }
+  .btn:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* poster frame: yellow dotted border + truck-art corners */
+  .poster-frame {
+    pointer-events: none;
+    position: absolute;
+    inset: 12px;
+    border: 3px dotted var(--yellow);
+    border-radius: 6px;
+    opacity: 0.85;
+  }
+  @media (max-width: 767px) {
+    .poster-frame {
+      inset: 7px;
+      border-width: 2px;
+    }
+  }
+  .corner {
+    pointer-events: none;
+    position: absolute;
+    width: clamp(70px, 9vw, 150px);
+    aspect-ratio: 1;
+    background: url(/ornaments/corner.webp) no-repeat top left / contain;
+  }
+
+  .copy-wash {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(11, 8, 7, 0.86) 0%, rgba(11, 8, 7, 0.5) 34%, transparent 60%);
+  }
+  @media (max-width: 767px) {
+    .copy-wash {
+      background: linear-gradient(0deg, rgba(11, 8, 7, 0.96) 0%, rgba(11, 8, 7, 0.8) 42%, rgba(11, 8, 7, 0.3) 66%, transparent 80%);
+    }
+  }
+  .vignette {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, transparent 45%, rgba(5, 4, 3, 0.7) 100%);
+  }
+
+  .leader {
+    flex: 1;
+    border-bottom: 2px dotted rgba(255, 194, 14, 0.35);
+    transform: translateY(-0.3em);
+    margin: 0 0.75rem;
+    min-width: 1rem;
+  }
+
+  .ajrak {
+    background-image: url(/ornaments/ajrak.webp);
+    background-size: 340px;
+  }
+}
+
+/* ---- beats: sticker-slap entrance, quick exit. The scroll tick only toggles .is-on */
+.beat {
+  visibility: hidden;
+  transition: visibility 0s linear 0.35s;
+}
+.beat.is-on {
+  visibility: visible;
+  transition: none;
+}
+.beat .slap {
+  display: block;
+  opacity: 0;
+  transform: translateY(0.25em) scale(1.5) rotate(calc(var(--r, -4deg) * 2));
+  text-shadow: 0 0 0 #000;
+  transition: opacity 0.2s ease, transform 0.3s ease, text-shadow 0.3s ease;
+}
+.beat.is-on .slap {
+  opacity: 1;
+  transform: rotate(var(--r, -4deg));
+  text-shadow: 0.06em 0.06em 0 #000;
+  transition: opacity 0.18s ease calc(var(--i, 0) * 90ms),
+    transform 0.55s cubic-bezier(0.34, 1.7, 0.5, 1) calc(var(--i, 0) * 90ms),
+    text-shadow 0.35s ease calc(var(--i, 0) * 90ms + 180ms);
+}
+.beat .rise {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+.beat.is-on .rise {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.5s ease calc(var(--i, 0) * 90ms), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--i, 0) * 90ms);
+}
+/* stamp: urdu wordmark / stickers spin in */
+.beat .stamp {
+  opacity: 0;
+  transform: scale(0.4) rotate(-25deg);
+  transition: opacity 0.2s, transform 0.3s;
+}
+.beat.is-on .stamp {
+  opacity: 1;
+  transform: scale(1) rotate(var(--r, 6deg));
+  transition: opacity 0.2s ease calc(var(--i, 0) * 90ms), transform 0.7s cubic-bezier(0.34, 1.8, 0.5, 1) calc(var(--i, 0) * 90ms);
+}
+/* truck-art corners bloom out of the frame corners */
+.beat .bloom {
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 0.3s, transform 0.4s;
+}
+.beat.is-on .bloom {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.4s ease 0.25s, transform 0.9s cubic-bezier(0.34, 1.5, 0.5, 1) 0.25s;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px) rotate(-1deg); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cue {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+.cue {
+  animation: cue 1.4s ease-in-out infinite;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cue {
+    animation: none;
+  }
+  .beat .slap,
+  .beat .rise,
+  .beat .stamp,
+  .beat .bloom {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
 }

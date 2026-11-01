@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nalli Pur — Biryani & Pulao
 
-## Getting Started
+Cinematic, scroll-driven website for Nalli Pur (Lahore). Scrolling plays a food film — rice cascades onto a platter, beef nalli lands, the camera orbits — then moves through charcoal BBQ and a full feast, into the menu, Mini Daig and ordering.
 
-First, run the development server:
+Built with Next.js (App Router) + TypeScript, Tailwind CSS v4, Lenis smooth scroll and a React Three Fiber heat-haze pass on the BBQ chapter. Footage and imagery were generated with Higgsfield (Seedance 2.5, Nano Banana, GPT Image).
+
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000 (writes to .next-dev)
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How the film works
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Frames are pre-extracted WebP images in `public/film/<chapter>/{d,m}/` (desktop 16:9, mobile portrait crop).
+- `src/components/FrameFilm.tsx` fetches them as compressed blobs and decodes only a small window around the playhead into `ImageBitmap`s, so memory stays low and scrubbing stays smooth.
+- Dev hooks: `?jump=<scrollY>` lands pre-scrolled; `window.__ready` flips once the page is settled.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Rebuilding frames
 
-## Learn More
+Raw clips and keyframes are kept outside the repo in `../media` (too large for git). With that folder present:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+python3 scripts/build_frames.py   # needs ffmpeg, Pillow, numpy
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+It regenerates `public/film`, `public/dishes` and `src/lib/films.ts`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Content
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Menu, prices, phone (0305-9555838) and branch addresses are transcribed from [@nallipurbiryanipulao](https://www.instagram.com/nallipurbiryanipulao/). Prices may change — update `src/lib/brand.ts`.
