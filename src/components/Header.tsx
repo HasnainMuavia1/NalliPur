@@ -32,38 +32,38 @@ export default function Header() {
         Skip to menu
       </a>
       <header className="fixed inset-x-0 top-0 z-50">
-        <div className="pointer-events-none absolute inset-0 h-32 bg-gradient-to-b from-coal/80 via-coal/30 to-transparent" />
-        <div className="relative flex items-center justify-between px-5 py-4 md:px-10 md:py-6">
+        <div className="pointer-events-none absolute inset-0 h-40 bg-gradient-to-b from-coal/85 via-coal/35 to-transparent md:h-48" />
+        <div className="relative flex items-center justify-between px-5 py-4 md:px-12 md:py-7">
           <a href="#serve" aria-label="Nalli Pur — back to top" className="block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/logo.webp" alt="Nalli Pur — Biryani & Pulao" width={867} height={384} className="h-9 w-auto md:h-11" />
+            <img src="/brand/logo.webp" alt="Nalli Pur — Biryani & Pulao" width={867} height={384} className="h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:-rotate-2 hover:scale-105 md:h-[5.5rem]" />
           </a>
-          <nav aria-label="Primary" className="hidden items-center gap-9 lg:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-10 lg:flex">
             {NAV.map((n) => (
               <a
                 key={n.href}
                 href={n.href}
-                className="font-[family-name:var(--font-display)] text-base uppercase tracking-wide text-ivory/85 transition-colors hover:text-yellow"
+                className="font-[family-name:var(--font-display)] text-xl uppercase tracking-wide text-ivory/90 transition-colors hover:text-yellow"
               >
                 {n.label}
               </a>
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <a href="#order" className="btn btn-yellow !px-4 !py-2 !text-sm md:!px-5 md:!text-base">
+            <a href="#order" className="btn btn-yellow !px-5 !py-2.5 !text-base md:!px-7 md:!py-3.5 md:!text-xl">
               Order now
             </a>
             <button
               ref={menuBtn}
               type="button"
-              className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden"
+              className="flex h-12 w-12 flex-col items-center justify-center gap-2 lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? "Close menu" : "Open menu"}
               onClick={() => setOpen((o) => !o)}
             >
-              <span className={`h-px w-6 bg-ivory transition-transform ${open ? "translate-y-[3.5px] rotate-45" : ""}`} />
-              <span className={`h-px w-6 bg-ivory transition-transform ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`} />
+              <span className={`h-0.5 w-7 bg-ivory transition-transform ${open ? "translate-y-[5px] rotate-45" : ""}`} />
+              <span className={`h-0.5 w-7 bg-ivory transition-transform ${open ? "-translate-y-[5px] -rotate-45" : ""}`} />
             </button>
           </div>
         </div>

@@ -150,7 +150,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-7xl flex-col gap-10 md:flex-row md:items-end md:justify-between">
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/logo.webp" alt="Nalli Pur — Biryani & Pulao" width={867} height={384} loading="lazy" className="h-14 w-auto" />
+          <img src="/brand/logo.webp" alt="Nalli Pur — Biryani & Pulao" width={867} height={384} loading="lazy" className="h-16 w-auto md:h-20" />
           <p className="display pop mt-5 -rotate-1 text-2xl">Authentic Karachi taste you&rsquo;ll never forget.</p>
         </div>
         <div className="flex flex-col gap-3 text-sm text-ivory-dim md:items-end">

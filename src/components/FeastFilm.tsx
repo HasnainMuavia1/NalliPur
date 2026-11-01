@@ -56,7 +56,7 @@ export default function FeastFilm() {
           alt="Nalli Pur — Biryani & Pulao"
           width={867}
           height={384}
-          className="stamp mb-5 h-auto w-36 md:w-44"
+          className="stamp mb-5 h-auto w-44 drop-shadow-[0_3px_10px_rgba(0,0,0,0.6)] md:w-56"
           style={{ "--r": "-3deg" } as React.CSSProperties}
         />
         <Slap
