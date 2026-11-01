@@ -53,6 +53,15 @@ const MAX_DECODE = 3;
 
 const pad = (n: number) => String(n).padStart(4, "0");
 
+// dev contract (?jump only): expose which frame each film wants vs. has drawn,
+// so the recording/screenshot harness can wait for exact frames
+type FilmState = { shown?: number; want?: number; near?: boolean };
+function filmState(id: string, patch: FilmState) {
+  const w = window as unknown as { __filmState?: Record<string, FilmState> };
+  w.__filmState = w.__filmState || {};
+  w.__filmState[id] = { ...w.__filmState[id], ...patch };
+}
+
 export default function FrameFilm({
   id,
   desktop,
@@ -101,7 +110,6 @@ export default function FrameFilm({
     const decoding = new Set<number>();
     let decodeInflight = 0;
     let center = 0;
-    let displayed = -1;
     let drawnBitmap: ImageBitmap | null = null;
     let current = 0;
     let lastP = -1;
@@ -235,17 +243,33 @@ export default function FrameFilm({
       schedule();
     };
 
-    const draw = (idx: number) => {
-      const hit = nearestBitmap(idx);
+    // pos is fractional: the next frame is blended in by the remainder, so the
+    // scrub stays continuous even when a scroll step is smaller than one frame
+    let drawnPos = -1;
+    const draw = (pos: number) => {
+      const i0 = Math.floor(pos);
+      const f = pos - i0;
+      const hit = nearestBitmap(i0);
       if (!hit) return;
       const [at, bmp] = hit;
       const s = Math.max(cw / bmp.width, ch / bmp.height);
       const dw = bmp.width * s;
       const dh = bmp.height * s;
-      ctx.drawImage(bmp, (cw - dw) * fx, (ch - dh) / 2, dw, dh);
+      const dx = (cw - dw) * fx;
+      const dy = (ch - dh) / 2;
+      ctx.globalAlpha = 1;
+      ctx.drawImage(bmp, dx, dy, dw, dh);
+      const next = f > 0.02 && at === i0 ? bitmaps.get(i0 + 1) : undefined;
+      if (next) {
+        ctx.globalAlpha = f;
+        ctx.drawImage(next, dx, dy, dw, dh);
+        ctx.globalAlpha = 1;
+      }
       if (drawnBitmap && drawnBitmap !== bmp && ![...bitmaps.values()].includes(drawnBitmap)) drawnBitmap.close();
-      displayed = at;
       drawnBitmap = bmp;
+      // exact = the wanted frame (and its blend partner, if any) were really drawn
+      drawnPos = at === i0 && (f <= 0.02 || next || i0 + 1 >= COUNT) ? pos : -1;
+      if (JUMP !== null) filmState(id, { shown: drawnPos === pos ? i0 : -1 });
       cb.current.onDraw?.();
     };
 
@@ -276,14 +300,15 @@ export default function FrameFilm({
         if (Math.abs(target - current) < 0.02) current = target;
       }
       const idx = Math.round(current);
+      if (JUMP !== null) filmState(id, { want: Math.floor(current), near });
       if (idx !== center) {
         center = idx;
         evict();
         schedule();
       }
-      if (idx !== displayed || forceDraw) {
+      if (Math.abs(current - drawnPos) > 0.01 || forceDraw) {
         forceDraw = false;
-        draw(idx);
+        draw(current);
       }
 
       if (p !== lastP || pinned !== lastPinned) {

@@ -32,6 +32,13 @@ html {
   background: var(--coal);
   color-scheme: dark;
 }
+/* no sideways scrolling: tilted ribbons and slap-in type may poke past the edge.
+   clip (not hidden) so position: sticky keeps working */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
 html.lenis,
 html.lenis body {
   height: auto;

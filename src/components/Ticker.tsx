@@ -53,10 +53,12 @@ export default function Ticker({ tone = "yellow", tilt = -2.5 }: { tone?: "yello
 
   const items = [...WORDS, ...WORDS];
   return (
+    // the ribbon is tilted and scaled past the edges; this wrapper clips it to the page width
+    <div className="relative z-30 -my-6 overflow-x-clip py-6">
     <div
       ref={wrap}
       aria-hidden="true"
-      className={`relative z-30 -my-6 overflow-hidden border-y-[3px] border-black py-3 ${
+      className={`relative overflow-hidden border-y-[3px] border-black py-3 ${
         tone === "yellow" ? "bg-yellow text-black" : "bg-brand-red text-ivory"
       }`}
       style={{ transform: `rotate(${tilt}deg) scale(1.05)` }}
@@ -71,6 +73,7 @@ export default function Ticker({ tone = "yellow", tilt = -2.5 }: { tone?: "yello
           </span>
         ))}
       </div>
+    </div>
     </div>
   );
 }
