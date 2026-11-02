@@ -146,23 +146,34 @@ export function Footer() {
   return (
     <footer className="relative z-10 bg-coal">
       <div aria-hidden="true" className="h-14 border-y-[3px] border-black bg-[url(/ornaments/strip.webp)] bg-[length:auto_100%] bg-repeat-x md:h-20" />
-      <div className="px-5 py-14 md:px-14 lg:px-20">
-      <div className="mx-auto flex max-w-7xl flex-col gap-10 md:flex-row md:items-end md:justify-between">
-        <div>
+      <div className="px-5 py-12 md:px-14 md:py-16 lg:px-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-8">
+          <div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/logo.webp" alt="Nalli Pur — Biryani & Pulao" width={867} height={384} loading="lazy" className="h-16 w-auto md:h-20" />
+            <p className="display pop mt-5 max-w-xs -rotate-1 text-2xl">Authentic Karachi taste you&rsquo;ll never forget.</p>
+          </div>
+          {/* the Urdu wordmark as the page's sign-off */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/logo.webp" alt="Nalli Pur — Biryani & Pulao" width={867} height={384} loading="lazy" className="h-16 w-auto md:h-20" />
-          <p className="display pop mt-5 -rotate-1 text-2xl">Authentic Karachi taste you&rsquo;ll never forget.</p>
+          <img
+            src="/brand/urdu-wordmark.webp"
+            alt="نلی پور"
+            lang="ur"
+            width={1000}
+            height={691}
+            loading="lazy"
+            className="order-first mx-auto h-auto w-[min(78vw,22rem)] -rotate-3 transition-transform duration-300 hover:rotate-0 hover:scale-105 lg:order-none lg:w-[clamp(20rem,27vw,26rem)]"
+          />
+          <div className="flex flex-col gap-3 text-sm text-ivory-dim lg:items-end">
+            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-ivory">
+              <InstagramIcon /> @nallipurbiryanipulao
+            </a>
+            <a href={PHONE_TEL} className="hover:text-ivory">
+              {PHONE_DISPLAY}
+            </a>
+            <p>© {new Date().getFullYear()} Nalli Pur — Biryani &amp; Pulao, Lahore</p>
+          </div>
         </div>
-        <div className="flex flex-col gap-3 text-sm text-ivory-dim md:items-end">
-          <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-ivory">
-            <InstagramIcon /> @nallipurbiryanipulao
-          </a>
-          <a href={PHONE_TEL} className="hover:text-ivory">
-            {PHONE_DISPLAY}
-          </a>
-          <p>© {new Date().getFullYear()} Nalli Pur — Biryani &amp; Pulao, Lahore</p>
-        </div>
-      </div>
       </div>
     </footer>
   );

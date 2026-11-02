@@ -116,11 +116,13 @@ function ChapterReadout() {
     });
     // hide once the film is over
     const menu = document.getElementById("stories") ?? document.getElementById("menu");
+    // the huge top margin makes "intersecting" mean "has reached the viewport bottom",
+    // so even an instant jump past the section flips it
     const io = new IntersectionObserver(
       ([e]) => {
-        if (wrap.current) wrap.current.style.opacity = e.boundingClientRect.top < window.innerHeight ? "0" : "1";
+        if (wrap.current) wrap.current.style.opacity = e.isIntersecting ? "0" : "1";
       },
-      { threshold: [0, 0.01] }
+      { rootMargin: "1000000px 0px 0px 0px" }
     );
     if (menu) io.observe(menu);
     return () => {
