@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Lilita_One, Lalezar, Poppins } from "next/font/google";
-import { BRANCHES, INSTAGRAM, PHONE_DISPLAY } from "@/lib/brand";
+import { BRANCHES, FACEBOOK, INSTAGRAM, PHONE_DISPLAY } from "@/lib/brand";
 import "./globals.css";
 
 const display = Lilita_One({ variable: "--font-display", subsets: ["latin"], weight: "400" });
@@ -28,7 +28,7 @@ const jsonLd = {
   name: "Nalli Pur — Biryani & Pulao",
   servesCuisine: ["Pakistani", "Biryani", "BBQ"],
   telephone: PHONE_DISPLAY,
-  sameAs: [INSTAGRAM],
+  sameAs: [INSTAGRAM, FACEBOOK],
   priceRange: "PKR",
   department: BRANCHES.map((b) => ({
     "@type": "Restaurant",

@@ -12,9 +12,52 @@ const NAV = [
   { href: "#visit", label: "Visit" },
 ];
 
+// page order for the active tab. Film stages overlap the one before them and only
+// show once pinned, so they count from the viewport top instead of its middle.
+const SPY: { id: string; tab: string | null; overlap?: boolean }[] = [
+  { id: "serve", tab: "#serve" },
+  { id: "bbq", tab: "#bbq", overlap: true },
+  { id: "feast", tab: null, overlap: true },
+  { id: "stories", tab: null },
+  { id: "menu", tab: "#menu" },
+  { id: "daig", tab: "#daig" },
+  { id: "visit", tab: "#visit" },
+];
+
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string | null>("#serve");
+  const [solid, setSolid] = useState(false);
   const menuBtn = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const els = SPY.map((s) => ({ ...s, el: document.getElementById(s.id) }));
+    const stories = document.getElementById("stories");
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const mid = window.innerHeight * 0.4;
+      let current: string | null = null;
+      for (const s of els) {
+        if (s.el && s.el.getBoundingClientRect().top <= (s.overlap ? 1 : mid)) current = s.tab;
+      }
+      setActive(current);
+      // over the film the header floats; on regular sections it needs its own background
+      setSolid(!!stories && stories.getBoundingClientRect().top <= 90);
+    };
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -31,19 +74,38 @@ export default function Header() {
       >
         Skip to menu
       </a>
-      <header className="fixed inset-x-0 top-0 z-50">
-        <div className="pointer-events-none absolute inset-0 h-40 bg-gradient-to-b from-coal/85 via-coal/35 to-transparent md:h-48" />
-        <div className="relative flex items-center justify-between px-5 py-4 md:px-12 md:py-7">
+      <header
+        className={`fixed inset-x-0 top-0 z-50 border-b-2 border-dotted transition-colors duration-300 ${
+          solid ? "border-yellow/70 bg-coal" : "border-transparent"
+        }`}
+      >
+        <div
+          className={`pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-coal/85 via-coal/35 to-transparent transition-opacity duration-300 md:h-48 ${
+            solid ? "opacity-0" : "opacity-100"
+          }`}
+        />
+        <div
+          className={`relative flex items-center justify-between px-5 transition-[padding] duration-300 md:px-12 ${
+            solid ? "py-2 md:py-2.5" : "py-4 md:py-7"
+          }`}
+        >
           <a href="#serve" aria-label="Nalli Pur — back to top" className="block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/logo.webp" alt="Nalli Pur — Biryani & Pulao" width={867} height={384} className="h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:-rotate-2 hover:scale-105 md:h-[5.5rem]" />
+            <img src="/brand/logo.webp" alt="Nalli Pur — Biryani & Pulao" width={867} height={384} className={`w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] transition-[height,transform] duration-300 hover:-rotate-2 hover:scale-105 ${
+                solid ? "h-12 md:h-16" : "h-14 md:h-[5.5rem]"
+              }`} />
           </a>
-          <nav aria-label="Primary" className="hidden items-center gap-10 lg:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-2 lg:flex xl:gap-3">
             {NAV.map((n) => (
               <a
                 key={n.href}
                 href={n.href}
-                className="font-[family-name:var(--font-display)] text-xl uppercase tracking-wide text-ivory/90 transition-colors hover:text-yellow"
+                aria-current={active === n.href ? "location" : undefined}
+                className={`rounded-full border-2 px-4 py-1 font-[family-name:var(--font-display)] text-xl uppercase tracking-wide transition-[color,background-color,transform,box-shadow,border-color] duration-200 ${
+                  active === n.href
+                    ? "-rotate-2 border-black bg-yellow text-black shadow-[3px_3px_0_#000]"
+                    : "border-transparent text-ivory/90 hover:text-yellow"
+                }`}
               >
                 {n.label}
               </a>
@@ -84,7 +146,8 @@ export default function Header() {
                   href={n.href}
                   tabIndex={open ? 0 : -1}
                   onClick={() => setOpen(false)}
-                  className="display pop-white block text-6xl"
+                  aria-current={active === n.href ? "location" : undefined}
+                  className={`display block text-6xl ${active === n.href ? "pop" : "pop-white"}`}
                 >
                   {n.label}
                 </a>

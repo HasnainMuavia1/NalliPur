@@ -6,6 +6,7 @@ export const PHONE_DISPLAY = "0305-9555838";
 export const PHONE_TEL = "tel:+923059555838";
 export const WHATSAPP = "https://wa.me/923059555838";
 export const INSTAGRAM = "https://www.instagram.com/nallipurbiryanipulao/";
+export const FACEBOOK = "https://www.facebook.com/nallipurbiryanipulao/";
 
 export const BRANCHES = [
   {

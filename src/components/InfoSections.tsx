@@ -1,4 +1,4 @@
-import { BRANCHES, DAIG, DAIG_NOTES, INSTAGRAM, PHONE_DISPLAY, PHONE_TEL, WHATSAPP } from "@/lib/brand";
+import { BRANCHES, DAIG, DAIG_NOTES, FACEBOOK, INSTAGRAM, PHONE_DISPLAY, PHONE_TEL, WHATSAPP } from "@/lib/brand";
 import { PriceTable } from "./MenuSection";
 
 export function DaigSection() {
@@ -68,6 +68,12 @@ const WhatsAppIcon = () => (
 const InstagramIcon = () => (
   <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
     <path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0m0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32M12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8m6.4-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88" />
+  </svg>
+);
+
+const FacebookIcon = () => (
+  <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+    <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.03 4.39 11.02 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07" />
   </svg>
 );
 
@@ -146,27 +152,19 @@ export function Footer() {
   return (
     <footer className="relative z-10 bg-coal">
       <div aria-hidden="true" className="h-14 border-y-[3px] border-black bg-[url(/ornaments/strip.webp)] bg-[length:auto_100%] bg-repeat-x md:h-20" />
-      <div className="px-5 py-12 md:px-14 md:py-16 lg:px-20">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-8">
+      <div className="px-5 py-14 md:px-14 lg:px-20">
+        <div className="mx-auto flex max-w-7xl flex-col gap-10 md:flex-row md:items-end md:justify-between">
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/logo.webp" alt="Nalli Pur — Biryani & Pulao" width={867} height={384} loading="lazy" className="h-16 w-auto md:h-20" />
-            <p className="display pop mt-5 max-w-xs -rotate-1 text-2xl">Authentic Karachi taste you&rsquo;ll never forget.</p>
+            <p className="display pop mt-5 -rotate-1 text-2xl">Authentic Karachi taste you&rsquo;ll never forget.</p>
           </div>
-          {/* the Urdu wordmark as the page's sign-off */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/urdu-wordmark.webp"
-            alt="نلی پور"
-            lang="ur"
-            width={1000}
-            height={691}
-            loading="lazy"
-            className="order-first mx-auto h-auto w-[min(78vw,22rem)] -rotate-3 transition-transform duration-300 hover:rotate-0 hover:scale-105 lg:order-none lg:w-[clamp(20rem,27vw,26rem)]"
-          />
-          <div className="flex flex-col gap-3 text-sm text-ivory-dim lg:items-end">
+          <div className="flex flex-col gap-3 text-sm text-ivory-dim md:items-end">
             <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-ivory">
-              <InstagramIcon /> @nallipurbiryanipulao
+              <InstagramIcon /> Instagram
+            </a>
+            <a href={FACEBOOK} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-ivory">
+              <FacebookIcon /> Facebook
             </a>
             <a href={PHONE_TEL} className="hover:text-ivory">
               {PHONE_DISPLAY}
