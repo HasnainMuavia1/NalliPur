@@ -143,17 +143,23 @@ export default function ServeFilm() {
         </p>
       </div>
 
-      {/* urdu wordmark stamp */}
+      {/* Nalli Pur's own Urdu wordmark artwork */}
       <div
         data-beat
         data-in="-1"
         data-out="0.085"
-        className="beat pointer-events-none absolute right-[6%] top-[16%] hidden md:block"
+        className="beat pointer-events-none absolute right-[5%] top-[11%] w-[min(58vw,16rem)] md:right-[6%] md:top-[13%] md:w-[clamp(17rem,27vw,27rem)]"
         aria-hidden="true"
       >
-        <span className="urdu stamp pop block text-[clamp(4rem,8vw,8rem)]" style={{ "--i": 4, "--r": "8deg" } as CSSProperties}>
-          نلی پور
-        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/brand/urdu-wordmark.webp"
+          alt=""
+          width={1000}
+          height={691}
+          className="stamp h-auto w-full"
+          style={{ "--i": 4, "--r": "5deg" } as CSSProperties}
+        />
       </div>
 
       {/* scroll cue */}

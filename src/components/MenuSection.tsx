@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { MENU, type MenuTable } from "@/lib/brand";
+import { UrduMark } from "./Poster";
 
 /** One menu board: yellow poster heading, dotted leaders, prices in yellow. */
 export function PriceTable({ table, dark = false }: { table: MenuTable; dark?: boolean }) {
@@ -133,8 +134,8 @@ export default function MenuSection() {
             </h2>
           </div>
           <div className="flex items-center gap-4">
-            <span className="urdu pop -rotate-6 text-6xl md:text-7xl" aria-hidden="true">
-              مینو
+            <span aria-hidden="true" className="-rotate-6">
+              <UrduMark text="مینو" className="text-7xl md:text-8xl" />
             </span>
             <p className="max-w-[16rem] text-sm leading-relaxed text-ivory/85">
               Prices in PKR as listed on our menu. They may change — please confirm when you order.

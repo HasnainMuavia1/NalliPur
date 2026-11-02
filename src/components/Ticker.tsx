@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
+import { UrduMark } from "./Poster";
 import { prefersReducedMotion, win } from "@/lib/scroll";
 
 /* Tilted poster ribbon. Drifts on its own; scrolling pushes it faster and skews
@@ -52,13 +53,19 @@ export default function Ticker({ tone = "yellow", tilt = -2.5 }: { tone?: "yello
   }, []);
 
   const items = [...WORDS, ...WORDS];
+  // yellow fill would vanish on the yellow ribbon, and a red ring on the red one
+  const markColours = (
+    tone === "yellow"
+      ? { "--fill": "#c8000a", "--gap": "#fbf3e4", "--ring": "#0b0807" }
+      : { "--fill": "#ffc20e", "--gap": "#0b0807", "--ring": "#fbf3e4" }
+  ) as CSSProperties;
   return (
     // the ribbon is tilted and scaled past the edges; this wrapper clips it to the page width
     <div className="relative z-30 -my-6 overflow-x-clip py-6">
     <div
       ref={wrap}
       aria-hidden="true"
-      className={`relative overflow-hidden border-y-[3px] border-black py-3 ${
+      className={`relative overflow-hidden border-y-[3px] border-black py-1.5 ${
         tone === "yellow" ? "bg-yellow text-black" : "bg-brand-red text-ivory"
       }`}
       style={{ transform: `rotate(${tilt}deg) scale(1.05)` }}
@@ -66,7 +73,14 @@ export default function Ticker({ tone = "yellow", tilt = -2.5 }: { tone?: "yello
       <div ref={track} className="flex w-max items-center gap-8 whitespace-nowrap will-change-transform">
         {items.map((w, i) => (
           <span key={i} className="flex items-center gap-8">
-            <span className={`${/[؀-ۿ]/.test(w) ? "urdu text-3xl md:text-4xl" : "display text-2xl md:text-3xl"}`}>{w}</span>
+            {w === "نلی پور" ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src="/brand/urdu-wordmark.webp" alt="" width={1000} height={691} className="h-14 w-auto md:h-[4.5rem]" loading="lazy" />
+            ) : /[\u0600-\u06FF]/.test(w) ? (
+              <UrduMark text={w} className="text-4xl md:text-5xl" style={markColours} />
+            ) : (
+              <span className="display text-2xl md:text-3xl">{w}</span>
+            )}
             <span className="text-xl" aria-hidden="true">
               ✦
             </span>

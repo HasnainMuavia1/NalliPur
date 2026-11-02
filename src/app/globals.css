@@ -80,6 +80,35 @@ body {
     color: var(--ivory);
     text-shadow: 0.06em 0.06em 0 #000;
   }
+  /* Urdu in the wordmark's style: fill, dark gap, then an outer ring.
+     Colours come from --fill / --gap / --ring so each background can adapt. */
+  .urdu-mark {
+    --fill: var(--yellow);
+    --gap: #0b0807;
+    --ring: #e80008;
+    position: relative;
+    display: inline-block;
+    isolation: isolate;
+    padding: 0.14em 0.2em;
+    color: var(--fill);
+  }
+  .urdu-mark::before,
+  .urdu-mark::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0.14em 0.2em;
+    z-index: -1;
+    -webkit-text-stroke-color: var(--gap);
+    -webkit-text-stroke-width: 0.13em;
+    color: var(--gap);
+    stroke-linejoin: round;
+  }
+  .urdu-mark::before {
+    z-index: -2;
+    -webkit-text-stroke-color: var(--ring);
+    -webkit-text-stroke-width: 0.22em;
+    color: var(--ring);
+  }
   .urdu {
     font-family: var(--font-urdu), serif;
     direction: rtl;

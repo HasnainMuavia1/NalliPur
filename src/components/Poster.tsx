@@ -50,3 +50,12 @@ export function Slap({
 }
 
 export const step = (i: number) => ({ "--i": i }) as CSSProperties;
+
+/** Urdu text with the wordmark's layered stroke; colours adapt via --fill/--gap/--ring. */
+export function UrduMark({ text, className = "", style }: { text: string; className?: string; style?: CSSProperties }) {
+  return (
+    <span className={`urdu urdu-mark ${className}`} data-text={text} style={style}>
+      {text}
+    </span>
+  );
+}
