@@ -53,12 +53,10 @@ export default function Ticker({ tone = "yellow", tilt = -2.5 }: { tone?: "yello
   }, []);
 
   const items = [...WORDS, ...WORDS];
-  // yellow fill would vanish on the yellow ribbon, and a red ring on the red one
-  const markColours = (
-    tone === "yellow"
-      ? { "--fill": "#c8000a", "--gap": "#fbf3e4", "--ring": "#0b0807" }
-      : { "--fill": "#ffc20e", "--gap": "#0b0807", "--ring": "#fbf3e4" }
-  ) as CSSProperties;
+  // a yellow fill would vanish on the yellow ribbon; elsewhere the white outer stroke separates it
+  const markColours = (tone === "yellow"
+    ? { "--fill": "#c8000a", "--gap": "#fbf3e4", "--ring": "#0b0807" }
+    : undefined) as CSSProperties | undefined;
   return (
     // the ribbon is tilted and scaled past the edges; this wrapper clips it to the page width
     <div className="relative z-30 -my-6 overflow-x-clip py-6">

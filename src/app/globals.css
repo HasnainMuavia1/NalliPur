@@ -80,34 +80,147 @@ body {
     color: var(--ivory);
     text-shadow: 0.06em 0.06em 0 #000;
   }
-  /* Urdu in the wordmark's style: fill, dark gap, then an outer ring.
-     Colours come from --fill / --gap / --ring so each background can adapt. */
+  /* Urdu in the wordmark's style: fill, dark gap, ring, then a white outer stroke
+     that keeps it legible on any background. Colours come from --fill / --gap /
+     --ring / --outer so each background can adapt. */
   .urdu-mark {
     --fill: var(--yellow);
     --gap: #0b0807;
     --ring: #e80008;
+    --outer: #ffffff;
     position: relative;
     display: inline-block;
     isolation: isolate;
-    padding: 0.14em 0.2em;
+    padding: 0.2em 0.26em;
     color: var(--fill);
+  }
+  .urdu-mark::before,
+  .urdu-mark::after,
+  .urdu-mark-outer {
+    position: absolute;
+    inset: 0.2em 0.26em;
+    white-space: nowrap;
   }
   .urdu-mark::before,
   .urdu-mark::after {
     content: attr(data-text);
-    position: absolute;
-    inset: 0.14em 0.2em;
+  }
+  /* rings are radial text-shadows, not text-stroke: stroke uses miter joins,
+     which spike on the sharp Urdu corners */
+  .urdu-mark::after {
     z-index: -1;
-    -webkit-text-stroke-color: var(--gap);
-    -webkit-text-stroke-width: 0.13em;
     color: var(--gap);
-    stroke-linejoin: round;
+    text-shadow:
+      0.065em 0.0em 0 var(--gap),
+      0.062em 0.02em 0 var(--gap),
+      0.053em 0.038em 0 var(--gap),
+      0.038em 0.053em 0 var(--gap),
+      0.02em 0.062em 0 var(--gap),
+      0.0em 0.065em 0 var(--gap),
+      -0.02em 0.062em 0 var(--gap),
+      -0.038em 0.053em 0 var(--gap),
+      -0.053em 0.038em 0 var(--gap),
+      -0.062em 0.02em 0 var(--gap),
+      -0.065em 0.0em 0 var(--gap),
+      -0.062em -0.02em 0 var(--gap),
+      -0.053em -0.038em 0 var(--gap),
+      -0.038em -0.053em 0 var(--gap),
+      -0.02em -0.062em 0 var(--gap),
+      -0.0em -0.065em 0 var(--gap),
+      0.02em -0.062em 0 var(--gap),
+      0.038em -0.053em 0 var(--gap),
+      0.053em -0.038em 0 var(--gap),
+      0.062em -0.02em 0 var(--gap);
   }
   .urdu-mark::before {
     z-index: -2;
-    -webkit-text-stroke-color: var(--ring);
-    -webkit-text-stroke-width: 0.22em;
     color: var(--ring);
+    text-shadow:
+      0.12em 0.0em 0 var(--ring),
+      0.118em 0.023em 0 var(--ring),
+      0.111em 0.046em 0 var(--ring),
+      0.1em 0.067em 0 var(--ring),
+      0.085em 0.085em 0 var(--ring),
+      0.067em 0.1em 0 var(--ring),
+      0.046em 0.111em 0 var(--ring),
+      0.023em 0.118em 0 var(--ring),
+      0.0em 0.12em 0 var(--ring),
+      -0.023em 0.118em 0 var(--ring),
+      -0.046em 0.111em 0 var(--ring),
+      -0.067em 0.1em 0 var(--ring),
+      -0.085em 0.085em 0 var(--ring),
+      -0.1em 0.067em 0 var(--ring),
+      -0.111em 0.046em 0 var(--ring),
+      -0.118em 0.023em 0 var(--ring),
+      -0.12em 0.0em 0 var(--ring),
+      -0.118em -0.023em 0 var(--ring),
+      -0.111em -0.046em 0 var(--ring),
+      -0.1em -0.067em 0 var(--ring),
+      -0.085em -0.085em 0 var(--ring),
+      -0.067em -0.1em 0 var(--ring),
+      -0.046em -0.111em 0 var(--ring),
+      -0.023em -0.118em 0 var(--ring),
+      -0.0em -0.12em 0 var(--ring),
+      0.023em -0.118em 0 var(--ring),
+      0.046em -0.111em 0 var(--ring),
+      0.067em -0.1em 0 var(--ring),
+      0.085em -0.085em 0 var(--ring),
+      0.1em -0.067em 0 var(--ring),
+      0.111em -0.046em 0 var(--ring),
+      0.118em -0.023em 0 var(--ring);
+  }
+  .urdu-mark-outer {
+    z-index: -3;
+    color: var(--outer);
+    text-shadow:
+      0.18em 0.0em 0 var(--outer),
+      0.178em 0.023em 0 var(--outer),
+      0.174em 0.047em 0 var(--outer),
+      0.166em 0.069em 0 var(--outer),
+      0.156em 0.09em 0 var(--outer),
+      0.143em 0.11em 0 var(--outer),
+      0.127em 0.127em 0 var(--outer),
+      0.11em 0.143em 0 var(--outer),
+      0.09em 0.156em 0 var(--outer),
+      0.069em 0.166em 0 var(--outer),
+      0.047em 0.174em 0 var(--outer),
+      0.023em 0.178em 0 var(--outer),
+      0.0em 0.18em 0 var(--outer),
+      -0.023em 0.178em 0 var(--outer),
+      -0.047em 0.174em 0 var(--outer),
+      -0.069em 0.166em 0 var(--outer),
+      -0.09em 0.156em 0 var(--outer),
+      -0.11em 0.143em 0 var(--outer),
+      -0.127em 0.127em 0 var(--outer),
+      -0.143em 0.11em 0 var(--outer),
+      -0.156em 0.09em 0 var(--outer),
+      -0.166em 0.069em 0 var(--outer),
+      -0.174em 0.047em 0 var(--outer),
+      -0.178em 0.023em 0 var(--outer),
+      -0.18em 0.0em 0 var(--outer),
+      -0.178em -0.023em 0 var(--outer),
+      -0.174em -0.047em 0 var(--outer),
+      -0.166em -0.069em 0 var(--outer),
+      -0.156em -0.09em 0 var(--outer),
+      -0.143em -0.11em 0 var(--outer),
+      -0.127em -0.127em 0 var(--outer),
+      -0.11em -0.143em 0 var(--outer),
+      -0.09em -0.156em 0 var(--outer),
+      -0.069em -0.166em 0 var(--outer),
+      -0.047em -0.174em 0 var(--outer),
+      -0.023em -0.178em 0 var(--outer),
+      -0.0em -0.18em 0 var(--outer),
+      0.023em -0.178em 0 var(--outer),
+      0.047em -0.174em 0 var(--outer),
+      0.069em -0.166em 0 var(--outer),
+      0.09em -0.156em 0 var(--outer),
+      0.11em -0.143em 0 var(--outer),
+      0.127em -0.127em 0 var(--outer),
+      0.143em -0.11em 0 var(--outer),
+      0.156em -0.09em 0 var(--outer),
+      0.166em -0.069em 0 var(--outer),
+      0.174em -0.047em 0 var(--outer),
+      0.178em -0.023em 0 var(--outer);
   }
   .urdu {
     font-family: var(--font-urdu), serif;
